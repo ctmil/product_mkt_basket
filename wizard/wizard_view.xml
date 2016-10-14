@@ -8,9 +8,9 @@
                                 <form string="Productos recomendados">
 					<field name="recommendation_lines" readonly="1">
 						<tree string="Productos recomendados" >
-							<field name="product_id" />
-							<field name="rule_recommended" />
-							<field name="rule_explanation" />
+							<field name="product_id" string="Producto Original"/>
+							<field name="rule_recommended" string="Regla recomendada"/>
+							<field name="rule_explanation" string="Explicacion regla"/>
 						</tree>
 					</field>
                                 </form>
