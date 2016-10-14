@@ -31,3 +31,13 @@ class product_product(models.Model):
 	_inherit = 'product.product'
 
 	association_rule_ids = fields.One2many(comodel_name='product.association.rule',inverse_name='product_id')
+
+class sale_order(models.Model):
+	_inherit = 'sale.order'
+
+        @api.multi
+        def order_recommendations(self):
+                if self.state not in ['draft','sent']:
+                        raise osv.except_osv(('Error'), ('Can create orders only in draft state'))
+                        return None
+		import pdb;pdb.set_trace()

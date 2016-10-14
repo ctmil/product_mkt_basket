@@ -61,5 +61,20 @@
             action="action_association_rules"
             sequence="90"/>
 
+        <record model="ir.ui.view" id="view_order_form_freight_price">
+            <field name="name">sale.order.form.freight_price</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <button name="action_quotation_send" position="before">
+                        <button name="order_recommendations" string="Recomendaciones" type="object"
+                                states="draft,sent"
+                                class="oe_highlight"
+                                groups="base.group_sale_salesman,base.group_sale_manager"/>
+		</button>
+	    </field>
+	</record>
+
+
     </data>
 </openerp>
