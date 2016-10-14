@@ -6,8 +6,8 @@
                         <field name="model">order.recommendation</field>
                         <field name="arch" type="xml">
                                 <form string="Productos recomendados">
-					<field name="recommendation_lines">
-						<tree string="Productos recomendados">
+					<field name="recommendation_lines" readonly="1">
+						<tree string="Productos recomendados" >
 							<field name="product_id" />
 							<field name="rule_recommended" />
 						</tree>

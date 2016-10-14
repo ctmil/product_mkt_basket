@@ -40,4 +40,16 @@ class sale_order(models.Model):
                 if self.state not in ['draft','sent']:
                         raise osv.except_osv(('Error'), ('Can create orders only in draft state'))
                         return None
-		import pdb;pdb.set_trace()
+                res = {
+                        "name": "sale.order.recommendations"+str(self.id),
+                        "type": "ir.actions.act_window",
+                        "res_model": "order.recommendation",
+                        "view_type": "form",
+                        "view_mode": "form",
+			"target": "new",
+                        #"view_id": "product.product_supplierinfo_form_view",
+                        #"res_id": supplier_id.id,
+                        "nodestroy": True,
+                        }
+                return res
+
