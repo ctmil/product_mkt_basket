@@ -10,26 +10,13 @@
                         <group>
                                 <field name="name" />
                                 <field name="product_id" />
-                                <field name="lhr" />
-                                <field name="rhr" />
+                                <field name="lhr" widget="many2many_tags"/>
+                                <field name="rhr" widget="many2many_tags"/>
                                 <field name="support" />
                                 <field name="confidence" />
                                 <field name="lift" />
                         </group>
 		</form>
-	    </field>
-	</record>
-
-
-        <record id="product_association_rule_form_view" model="ir.ui.view">
-            <field name="name">product.association.rule.form</field>
-            <field name="model">product.association.rule</field>
-            <field name="arch" type="xml">
-		<field name="default_code" position="after">
-			<field name="product_rank" />
-			<field name="porcentaje_del_total" />
-			<field name="product_abc" />
-		</field>
 	    </field>
 	</record>
 
