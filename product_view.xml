@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record id="stock_presupuesto_tree_view" model="ir.ui.view">
+            <field name="name">stock.presupuesto.tree.view</field>
+            <field name="model">stock.presupuesto</field>
+            <field name="arch" type="xml">
+                <tree string="Pedidos de Reposicion">
+                    <field name="business_unit" />
+                    <field name="name" />
+                    <field name="warehouse_id"/>
+		    <field name="date_planned"/>
+		    <field name="monto_lineas" />
+                    <field name="monto_presupuesto"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="stock_presupuesto_line_form_view" model="ir.ui.view">
+            <field name="name">stock.presupuesto.line.form.view</field>
+            <field name="model">stock.presupuesto.line</field>
+            <field name="arch" type="xml">
+		<form string="Linea de reposicion">
+			<group>
+				<!-- field name="presupuesto_id" readonly="1" / -->
+				<field name="product_id" />
+				<field name="cantidad" />
+				<field name="monto" readonly="1" />
+				<field name="procurement_id" readonly="1" />
+			</group>
+			<notebook>
+				<page string="Estadisticas">
+					<group>
+						<field name="cantidad_sugerida" readonly="1" string="Cantidad vendida mes anterior"/>
+						<field name="cantidad_vendida_1wk" readonly="1" string="Cantidad vendida semana anterior"/>
+						<field name="cantidad_vendida_2wk" readonly="1" string="Cantidad vendida dos semanas atras"/>
+					</group>
+				</page>
+			</notebook>
+		</form>
+	    </field>
+	</record>
+
+        <record id="stock_presupuesto_form_view" model="ir.ui.view">
+            <field name="name">stock.presupuesto.form.view</field>
+            <field name="model">stock.presupuesto</field>
+            <field name="arch" type="xml">
+                <form string="Pedidos de Reposicion">
+			<header>
+				<button name="process_lines" states="draft" type="object"
+					string="Procesar Pedido" class="oe_highlight" 
+					attrs="{'invisible': [('ok_process','=',True)]}" />
+				<field name="state" widget="statusbar" readonly="1" />
+			</header>
+			<group>
+			    <field name="ok_process" invisible="1" />
+			    <field name="business_unit" attrs="{'readonly': [('state','=','process')]}" />
+			    <field name="name" attrs="{'readonly': [('state','=','process')]}"/>
+			    <field name="calendar_id" string="Fecha Pedido" />
+	                    <field name="warehouse_id" readonly="1"/>
+			    <field name="date_planned" readonly="1"/>
+			</group>
+			<group string="Montos" cols="4" colspan="4">
+        	            <field name="monto_presupuesto" readonly="1"/>
+        	            <field name="monto_lineas"/>
+			</group>
+			<notebook>
+				<page string="Productos">
+					<field name="presupuesto_lines" attrs="{'readonly': [('state','=','process')]}">
+					    <tree string="Productos" >
+						<field name="product_id" />
+						<field name="cantidad" />
+						<field name="monto" readonly="1"/>
+						<field name="procurement_id" readonly="1"/>
+						<field name="procurement_state" readonly="1" />
+					    </tree>
+			        	</field>
+				</page>
+			</notebook>
+                </form>
+            </field>
+        </record>
+
+        <record id="stock_presupuesto_calendar_calendar_view" model="ir.ui.view">
+            <field name="name">stock.presupuesto.calendar.calendar.view</field>
+            <field name="model">stock.presupuesto.calendar</field>
+            <field name="arch" type="xml">
+                <calendar string="Pedidos de Reposicion - Calendario" date_start="date" color="warehouse_id" >
+			<group>
+				<field name="name" />
+			</group>
+		</calendar>
+	    </field>
+	</record>
+
+        <record id="stock_presupuesto_calendar_form_view" model="ir.ui.view">
+            <field name="name">stock.presupuesto.calendar.form.view</field>
+            <field name="model">stock.presupuesto.calendar</field>
+            <field name="arch" type="xml">
+                <form string="Pedidos de Reposicion - Calendario">
+			<group>
+				<field name="name" />
+				<field name="warehouse_id" />
+				<field name="date" />
+				<field name="presupuesto" />
+			</group>
+		</form>
+	    </field>
+	</record>
+
+        <record id="action_ba_reorderpoint" model="ir.actions.act_window">
+            <field name="name">Puntos de Pedido</field>
+            <field name="res_model">stock.presupuesto</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_ba_reorderpoint_calendar" model="ir.actions.act_window">
+            <field name="name">Puntos de Pedido - Calendario</field>
+            <field name="res_model">stock.presupuesto.calendar</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+        </record>
+
+        <menuitem id="menu_ba_reorderpoint" name="Puntos de Pedido" 
+            parent="point_of_sale.menu_point_config_product" 
+            action="action_ba_reorderpoint"
+            sequence="100"/>
+
+        <menuitem id="menu_ba_reorderpoint_calendar" name="Puntos de Pedido - Calendario" 
+            parent="point_of_sale.menu_point_config_product" 
+            action="action_ba_reorderpoint_calendar"
+            sequence="120"/>
+
+
+    </data>
+</openerp>
