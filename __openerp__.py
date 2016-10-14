@@ -8,6 +8,7 @@
 	#'security/security.xml',
 	#'wizard/wizard_view.xml',
 	'product_view.xml',
+	'wizard/wizard_view.xml',
     ],
     'demo': [
     ],

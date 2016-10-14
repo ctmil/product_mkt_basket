@@ -1,0 +1,19 @@
+<openerp>
+        <data>
+
+                <record id="sale_order_recommendation" model="ir.ui.view">
+                        <field name="name">Sale Order Recommendation</field>
+                        <field name="model">order.recommendation</field>
+                        <field name="arch" type="xml">
+                                <form string="Productos recomendados">
+					<field name="recommendation_lines">
+						<tree string="Productos recomendados">
+							<field name="product_id" />
+							<field name="rule_recommended" />
+						</tree>
+					</field>
+                                </form>
+                        </field>
+                </record>
+	</data>
+</openerp>
