@@ -40,6 +40,20 @@ class sale_order(models.Model):
                 if self.state not in ['draft','sent']:
                         raise osv.except_osv(('Error'), ('Can create orders only in draft state'))
                         return None
+		vals = {
+			'order_id': self.id,
+			}
+		recommendation_id = self.env['order.recommendation'].create(vals)
+		for line in self.order_line:
+			if line.product_id.association_rule_ids:
+				rule_ids = line.product_id.association_rule_ids
+				for rule_id in rule_ids:
+					vals_rule = {
+						'recommendation_id': recommendation_id.id,
+						'product_id': line.product_id.id,
+						'rule_recommended': rule_id.id,
+						}	
+					rule_id = self.env['order.recommendation.line'].create(vals_rule)
                 res = {
                         "name": "sale.order.recommendations"+str(self.id),
                         "type": "ir.actions.act_window",
@@ -48,7 +62,7 @@ class sale_order(models.Model):
                         "view_mode": "form",
 			"target": "new",
                         #"view_id": "product.product_supplierinfo_form_view",
-                        #"res_id": supplier_id.id,
+                        "res_id": recommendation_id.id,
                         "nodestroy": True,
                         }
                 return res
