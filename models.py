@@ -30,4 +30,4 @@ class product_association_rule(models.Model):
 class product_product(models.Model):
 	_inherit = 'product.product'
 
-	association_rule_ids = fields.One2many(comodel_name='product.asssociation.rule',inverse_name='product_id')
+	association_rule_ids = fields.One2many(comodel_name='product.association.rule',inverse_name='product_id')
