@@ -42,6 +42,7 @@ class product_association_rule(models.Model):
 	confidence = fields.Float(string='Confianza')
 	lift = fields.Float(string='Lift')
 	rule_text = fields.Char('Texto Recomendacion',compute=_compute_rule_text)
+	rule_manual_text = fields.Text('Regla ingresada manualmente')
 
 class product_product(models.Model):
 	_inherit = 'product.product'
@@ -57,7 +58,10 @@ class sale_order_line(models.Model):
 		if self.product_id:
 			if self.product_id.association_rule_ids:
 				for rule_id in self.product_id.association_rule_ids:
-					return_value = return_value + rule_id.rule_text + '\n'
+					if rule_id.rule_manual_text:
+						return_value = return_value + rule_id.rule_manual_text + '\n'
+					else:
+						return_value = return_value + rule_id.rule_text + '\n'
 		self.line_recommendations = return_value
 
 	line_recommendations = fields.Text('Recomendaciones',compute=_compute_order_line_recommendations)
