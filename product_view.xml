@@ -15,6 +15,7 @@
                                 <field name="support" />
                                 <field name="confidence" />
                                 <field name="lift" />
+                                <field name="rule_text" />
                         </group>
 		</form>
 	    </field>
