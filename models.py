@@ -17,6 +17,12 @@ class product_association_rule(models.Model):
 	_name = 'product.association.rule'
 	_description = 'Reglas de asociacion de productos'
 
+	@api.one
+	def _compute_rule_text(self):
+		return_value = "Cada vez que se vende el producto %s tambien se vende el producto %s un %f por ciento de veces"%\
+			(self.product_id.name,self.product_id.name,self.confidence)
+		self.rule_text = return_value
+
 	name = fields.Char('Nombre',required=True)
 	product_id = fields.Many2one('product.product',string='Producto')
 	lhr = fields.Many2many(comodel_name='product.product',relation='lhr_product_association',\
@@ -26,6 +32,7 @@ class product_association_rule(models.Model):
 	support = fields.Float(string='Soporte')
 	confidence = fields.Float(string='Confianza')
 	lift = fields.Float(string='Lift')
+	rule_text = fields.Char('Texto Recomendacion',compute=_compute_rule_text)
 
 class product_product(models.Model):
 	_inherit = 'product.product'
