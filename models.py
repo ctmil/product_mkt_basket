@@ -51,6 +51,17 @@ class product_product(models.Model):
 class sale_order(models.Model):
 	_inherit = 'sale.order'
 
+	@api.one
+	def _compute_order_line_recommendations(self):
+		return_value = ''
+		if self.product_id:
+			if self.product_id.association_rule_ids:
+				for rule_id in self.product_id.association_rule_ids:
+					return_value = return_value + rule_id.rule_text + '\n'
+		self.line_recommendations = return_value
+
+	line_recommendations = fields.Text('Recomendaciones',compute=_compute_order_line_recommendations)
+
         @api.multi
         def order_recommendations(self):
                 if self.state not in ['draft','sent']:
