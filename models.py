@@ -19,13 +19,17 @@ class product_association_rule(models.Model):
 
 	@api.one
 	def _compute_rule_text(self):
+		lhr_products = []
 		rhr_products = []
+		for lhr_product_id in self.lhr.ids:
+			lhr_products.append(self.env['product.product'].browse(lhr_product_id).name)
 		for rhr_product_id in self.rhr.ids:
 			rhr_products.append(self.env['product.product'].browse(rhr_product_id).name)
 		if rhr_products:
 			rhr_product_str = ','.join(rhr_products)
-			return_value = "Cada vez que se vende el producto %s tambien se vende el producto %s un %6.2f por ciento de veces"%\
-				(self.product_id.name,rhr_product_str,self.confidence*100)
+			lhr_product_str = ','.join(lhr_products)
+			return_value = "Cada vez que se vende el/los producto/s %s tambien se vende el producto %s un %6.2f por ciento de veces"%\
+				(lhr_product_str,rhr_product_str,self.confidence*100)
 		self.rule_text = return_value
 
 	name = fields.Char('Nombre',required=True)
