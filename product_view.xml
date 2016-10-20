@@ -74,7 +74,7 @@
                                 class="oe_highlight"
                                 groups="base.group_sale_salesman,base.group_sale_manager"/>
 		</button>
-                <xpath expr="//page[@string='Order Lines']/field[@name='order_line']/tree[@string='Sales Order Lines']/field[@name='price_unit']" position="after">
+                <xpath expr="//page[@string='Order Lines']/field[@name='order_line']/tree[@string='Sales Order Lines']/field[@name='name']" position="after">
 			<field name="line_recommendations" />
 		</xpath>
 	    </field>
