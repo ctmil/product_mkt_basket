@@ -48,8 +48,8 @@ class product_product(models.Model):
 
 	association_rule_ids = fields.One2many(comodel_name='product.association.rule',inverse_name='product_id')
 
-class sale_order(models.Model):
-	_inherit = 'sale.order'
+class sale_order_line(models.Model):
+	_inherit = 'sale.order.line'
 
 	@api.one
 	def _compute_order_line_recommendations(self):
@@ -62,6 +62,10 @@ class sale_order(models.Model):
 
 	line_recommendations = fields.Text('Recomendaciones',compute=_compute_order_line_recommendations)
 
+class sale_order(models.Model):
+	_inherit = 'sale.order'
+
+	association_rule_ids = fields.One2many(comodel_name='product.association.rule',inverse_name='product_id')
         @api.multi
         def order_recommendations(self):
                 if self.state not in ['draft','sent']:
